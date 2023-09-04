@@ -37,31 +37,26 @@ class Solution {
 
         // WIthout any Extra Space
 
+        /*
         for(int i = m, j = 0; j < n; j++) {
             nums1[i] = nums2[j];
             i++;
         }
 
         Arrays.sort(nums1);
+        */
 
-        // int i = m-1;
-        // int j = 0;
+        int i = m-1;
+        int j = n-1;
+        int k = m+n-1;
 
-        // while(i >= 0 && j < n) {
-        //     if(nums1[i] > nums2[j]) {
-        //         int temp = nums1[i];
-        //         nums1[i] = nums2[j];
-        //         nums2[j] = temp;
-
-        //         i--;
-        //         j++;
-        //     } else {
-        //         break;
-        //     }
-        // }
-
-        // Arrays.sort(nums1);
-        // Arrays.sort(nums2);
+        while(j >= 0) {
+            if(i >= 0 && nums1[i] > nums2[j]) {
+                nums1[k--] = nums1[i--];
+            } else {
+                nums1[k--] = nums2[j--];
+            }
+        }
         
     }
 }
