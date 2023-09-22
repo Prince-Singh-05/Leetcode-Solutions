@@ -23,7 +23,7 @@ class Solution {
     public int lowerBound(int arr[], int x) {
         int s = 0;
         int e = arr.length-1;
-        int ans = -1;
+        int ans = e;
 
         while(s <= e) {
             int mid = s+(e-s)/2;
@@ -46,15 +46,22 @@ class Solution {
         int high = lowerBound(arr, x);
         int low = high-1;
 
-        while(high-low < k && low>=0 && high<arr.length) {
-            if((x - arr[low]) > (arr[high] - x)) {
+        while(k>0) {
+
+            if(low < 0) {
+                high++;
+            } else if(high >= arr.length) {
+                low--;
+            } else if((x - arr[low]) > (arr[high] - x)) {
                 high++;
             } else {
                 low--;
             }
+
+            --k;
         }
 
-        for(int i = low; i<=high; i++) {
+        for(int i = low+1; i<high; i++) {
             ans.add(arr[i]);
         }
 
@@ -63,8 +70,8 @@ class Solution {
     }
 
     public List<Integer> findClosestElements(int[] arr, int k, int x) {
-        return twoPtrMethod1(arr, k, x);
-        // return bs_method(arr, k, x);
+        // return twoPtrMethod1(arr, k, x);
+        return bs_method(arr, k, x);
 
     }
 }
