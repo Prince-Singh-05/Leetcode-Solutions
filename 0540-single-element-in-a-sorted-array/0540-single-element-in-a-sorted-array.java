@@ -1,6 +1,8 @@
 class Solution {
     public int singleNonDuplicate(int[] nums) {
-
+        
+        // BINARY SEARCH O(log n)
+        /*
         int n = nums.length;
         int s = 0;
         int e = n-1;
@@ -26,5 +28,16 @@ class Solution {
         }
 
         return -1;
+        */
+
+        // XOR O(n)
+
+        int ans = 0;
+
+        for(int i : nums) {
+            ans = ans^i;
+        }
+
+        return ans;
     }
 }
