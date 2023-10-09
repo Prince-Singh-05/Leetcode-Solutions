@@ -1,28 +1,17 @@
 class Solution {
 public:
     string convert(string s, int numRows) {
-        if(numRows == 1) return s;
+        if(numRows == 1 || numRows >= s.length()) return s;
         string ans;
 
-        for(int i = 0; i<numRows; i++) {
-            if(i == 0 || i == numRows-1) {
-                int j = i;
-                while(j < s.length()) {
-                    ans += s[j];
-                    j += (numRows-1)*2;
-                }
-            } else {
-                int row = i;
-                int j = i;
-                int count = 0;
-                while(j < s.length()) {
-                    ans += s[j];
-                    if(count % 2 == 0) {
-                        j += 2*(numRows-1) - 2*row;
-                    } else {
-                        j += 2*(numRows-1) - (2*(numRows-1) - 2*row);
-                    }
-                    count++;
+        int n = s.length();
+        int cycleLen = 2 * numRows - 2;
+        
+        for (int i = 0; i < numRows; i++) {
+            for (int j = 0; j + i < n; j += cycleLen) {
+                ans.push_back(s[j + i]);
+                if (i != 0 && i != numRows - 1 && j + cycleLen - i < n) {
+                    ans.push_back(s[j + cycleLen - i]);
                 }
             }
         }
