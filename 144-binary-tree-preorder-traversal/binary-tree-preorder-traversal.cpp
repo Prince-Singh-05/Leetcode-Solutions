@@ -12,6 +12,8 @@
 class Solution {
 public:
 
+    vector<int> ans;
+
     void preOrder(TreeNode* root, vector<int> &ans) {
         // NLR
 
@@ -32,7 +34,7 @@ public:
 
     vector<int> preorderTraversal(TreeNode* root) {
 
-        vector<int> ans;
+        // vector<int> ans;
         preOrder(root, ans);
         return ans;
 
