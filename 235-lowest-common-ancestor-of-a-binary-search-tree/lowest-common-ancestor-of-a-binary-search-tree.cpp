@@ -26,15 +26,15 @@ public:
             return rightAns;
         }
 
-        // case 3 - p is in left sub tree & q is in right sub tree
-        if(p->val < root->val && q->val > root->val) {
-            return root;
-        }
+        // // case 3 - p is in left sub tree & q is in right sub tree
+        // if(p->val < root->val && q->val > root->val) {
+        //     return root;
+        // }
 
-        // case 4 - p is in right sub tree & q is in left sub tree
-        if(p->val > root->val && q->val < root->val) {
-            return root;
-        }
+        // // case 4 - p is in right sub tree & q is in left sub tree
+        // if(p->val > root->val && q->val < root->val) {
+        //     return root;
+        // }
 
         return root;
     }
