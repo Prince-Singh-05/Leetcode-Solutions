@@ -1,30 +1,23 @@
 class Solution {
 public:
-
-    void swap(int a, int b, vector<int>& nums) {
-        int temp = nums[a];
-        nums[a] = nums[b];
-        nums[b] = temp;
-    }
-
     int removeDuplicates(vector<int>& nums) {
+        
         int i = 0;
         int j = 1;
-        int count = 0;
 
         while(j < nums.size()) {
-            if(nums[i] >= nums[j]) {
-                ++j;
+
+            if(nums[i] == nums[j]) {
+                nums[j] *= -1;
+                j++;
             } else {
-                swap(i+1, j, nums);
-                ++i;                
+                i++;
+                swap(nums[i], nums[j]);
+                j++;
             }
         }
 
-        for(int idx = 0; idx <= i; ++idx) {
-            ++count;
-        }
+        return i+1;
 
-        return count;
     }
 };
