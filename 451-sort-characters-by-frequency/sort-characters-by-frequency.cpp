@@ -24,8 +24,6 @@ public:
             freq[c]++;
         }
 
-        // sort(freq.begin(), freq.end());
-
         string ans = "";
 
         for(int i = 0; i<s.size(); i++) {
