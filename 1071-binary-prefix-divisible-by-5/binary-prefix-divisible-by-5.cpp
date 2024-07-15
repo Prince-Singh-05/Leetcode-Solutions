@@ -9,7 +9,6 @@ public:
         for(int i = 0; i<n; i++) {
 
             binary = (binary * 2 + nums[i]) % 5;
-            cout << binary << endl;
             ans.push_back(binary == 0);
         }
 
