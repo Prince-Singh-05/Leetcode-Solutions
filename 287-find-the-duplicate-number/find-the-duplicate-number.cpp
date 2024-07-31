@@ -1,28 +1,24 @@
 class Solution {
 public:
-
     int findDuplicate(vector<int>& nums) {
 
-        // visited Solution -> modifies the array -> T.C = O(n) & S.C = O(1)
-        // int ans = -1;
+        // Circular Linked List Concept with Floyd's Algorithm
+        // T.C => O(N) && S.C => (1)
+        
+        int slow = nums[0];
+        int fast = nums[nums[0]];
 
-        // for(int i = 0; i<nums.size(); i++) {
-        //     int index = abs(nums[i]);
-
-        //     if(nums[index] < 0) {
-        //         return index;
-        //     }
-
-        //     nums[index] *= -1;
-        // }
-
-        // return -1;
-
-        // positioning Method -> modifies the array -> T.C = O(n) & S.C = O(1)
-
-        while(nums[0] != nums[nums[0]]) {
-            swap(nums[0], nums[nums[0]]);
+        while(slow != fast) {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
         }
-        return nums[0];
+
+        fast = 0;
+        while(slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+
+        return fast;
     }
 };
