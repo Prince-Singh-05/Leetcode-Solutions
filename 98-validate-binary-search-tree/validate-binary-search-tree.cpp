@@ -11,26 +11,26 @@
  */
 class Solution {
 public:
-
-    bool solve(long long int lb, long long int ub, TreeNode* root) {
-        
-        if(root == NULL) {
-            return true;
-        }
-
-        bool cnd1 = (root->val) > lb;
-        bool cnd2 = (root->val) < ub;
-        bool leftAns = solve(lb, root->val, root->left);
-        bool  rightAns = solve(root->val, ub, root->right);
-
-        return cnd1 && cnd2 && leftAns && rightAns;
-    }
-
     bool isValidBST(TreeNode* root) {
-        long long int lowerbound = -2147483658;
-        long long int upperbound = 2147483658;
-
-        bool isBST = solve(lowerbound, upperbound, root);
-        return isBST;
+        stack<TreeNode*> stk;
+        TreeNode* prev = NULL;
+        
+        while (!stk.empty() || root != NULL) {
+            while (root != NULL) {
+                stk.push(root);
+                root = root->left;
+            }
+            root = stk.top();
+            stk.pop();
+            
+            if (prev != NULL && prev->val >= root->val) {
+                return false;
+            }
+            
+            prev = root;
+            root = root->right;
+        }
+        
+        return true;
     }
 };
