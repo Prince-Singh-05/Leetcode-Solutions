@@ -11,46 +11,33 @@
  */
 class Solution {
 public:
+    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
+        map<int, int> inMap;
 
-    int searchInOrder(vector<int> inorder, int size, int target) {
-        for(int i = 0; i<size; i++) {
-            if(inorder[i] == target) {
-                return i;
-            }
+        for(int i = 0; i<inorder.size(); i++) {
+            inMap[inorder[i]] = i;
         }
 
-        return -1;
+        TreeNode* root = buildTree(preorder, 0, preorder.size()-1, inorder, 0, inorder.size()-1, inMap);
+
+        return root;
     }
 
-    TreeNode* solve(vector<int> &preorder, vector<int> &inorder, int &preIndex, int inorderStart, int inorderEnd, int size) {
+private:
+    TreeNode* buildTree(vector<int>& preorder, int preStart, int preEnd, vector<int>& inorder, int inStart, int inEnd, map<int, int>& inMap) {
 
-        // base case
-        if(preIndex >= size || inorderStart > inorderEnd) {
+        if(preStart > preEnd || inStart > inEnd) {
             return NULL;
         }
 
-        // finding root of the tree
-        int element = preorder[preIndex];
-        preIndex++;
+        TreeNode* root = new TreeNode(preorder[preStart]);
 
-        TreeNode* root = new TreeNode(element);
+        int inRoot = inMap[root->val];
+        int numsleft = inRoot - inStart;
 
-        int position = searchInOrder(inorder, size, element);
-
-        root->left = solve(preorder, inorder, preIndex, inorderStart, position-1, size);
-        root->right = solve(preorder, inorder, preIndex, position + 1, inorderEnd, size);
+        root->left = buildTree(preorder, preStart + 1, preStart + numsleft, inorder, inStart, inRoot - 1, inMap);
+        root->right = buildTree(preorder, preStart + numsleft + 1, preEnd, inorder, inRoot + 1, inEnd, inMap);
 
         return root;
-
-    }
-
-    TreeNode* buildTree(vector<int>& preorder, vector<int>& inorder) {
-        int size = inorder.size();
-        int preIndex = 0;
-        int inorderStart = 0;
-        int inorderEnd = size - 1;
-        TreeNode* root = solve(preorder, inorder, preIndex, inorderStart, inorderEnd, size);
-        return root;
-
     }
 };
