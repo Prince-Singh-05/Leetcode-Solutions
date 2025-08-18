@@ -1,29 +1,20 @@
 class Solution {
 public:
     string reverseVowels(string s) {
-        vector<char> vowels;
-        string ans = "";
+        unordered_set<char> vowelSet = {'a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U'};
+        int left = 0, right = s.size()-1;
 
-        char vowel[] = {'a', 'A', 'e', 'E', 'i', 'I', 'o', 'O', 'u', 'U'}; 
+        while(left < right) {
+            while(left < right && vowelSet.find(s[left]) == vowelSet.end()) left++;
+            while(left < right && vowelSet.find(s[right]) == vowelSet.end()) right--;
 
-        for(char ch: s) {
-            bool isVowel = find(begin(vowel), end(vowel), ch) != end(vowel);
-            if(isVowel) {
-                vowels.push_back(ch);
+            if(left < right) {
+                swap(s[left], s[right]);
+                left++;
+                right--;
             }
         }
 
-        int j = vowels.size()-1;
-
-        for(int i = 0; i<s.size(); i++) {
-            bool isVowel = find(begin(vowel), end(vowel), s[i]) != end(vowel);
-            if(isVowel) {
-                ans += vowels[j--];
-            } else {
-                ans += s[i];
-            }
-        }
-
-        return ans;
+        return s;
     }
 };
