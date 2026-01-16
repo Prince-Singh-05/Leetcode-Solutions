@@ -1,35 +1,45 @@
 class Solution {
+private:
+    bool checkValid(vector<int>& have, vector<int>& needed) {
+        for (int i = 0; i<256; i++) {
+            if (have[i] < needed[i]) return false;
+        }
+
+        return true;
+    }
+
 public:
     string minWindow(string s, string t) {
-        int freqT[256] = {0};
-        int l = 0, r = 0, minLen = INT_MAX, start = -1, cnt = 0;
+        int m = s.size();
+        int n = t.size();
+        int low = 0;
+        vector<int> have(256,0);
+        vector<int> needed(256,0);
+        int res_len = INT_MAX;
+        int start = -1;
 
-        for(int i = 0; i<t.length(); i++) {
-            freqT[t[i]]++;
+        if (m < n) return "";
+
+        for (int i = 0; i < n; i++) {
+            needed[t[i]]++;
         }
 
-        while(r < s.length()) {
-            if(freqT[s[r]] > 0) {
-                cnt += 1;
-            }
-            freqT[s[r]]--;
-            
-            while (cnt == t.length()) {
-                if(r-l+1 < minLen) {
-                    minLen = r-l+1;
-                    start = l;
+        for (int high = 0; high < m; high++) {
+            have[s[high]]++;
+
+            while (checkValid(have, needed)) {
+                int len = high-low+1;
+
+                if (res_len > len) {
+                    res_len = len;
+                    start = low;
                 }
-                
-                freqT[s[l]]++;
-                if(freqT[s[l]] > 0) cnt -= 1;
 
-                l++;
+                have[s[low]]--;
+                low++;
             }
-
-            r++;
         }
-        
 
-        return (start == -1) ? "" : s.substr(start, minLen);
+        return res_len == INT_MAX ? "" : s.substr(start, res_len);   
     }
 };
