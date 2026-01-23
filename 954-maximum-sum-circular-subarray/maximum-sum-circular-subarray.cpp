@@ -16,16 +16,12 @@ public:
             total_sum += nums[i];
         }
 
-        cout << "largest: " << largest_ans << endl;
-
         for (int i = 1; i<n; i++) {
             int opt1 = smallest + nums[i];
             int opt2 = nums[i];
             smallest = min(opt1, opt2);
             smallest_ans = min(smallest_ans, smallest);
         }
-
-        cout << "smallest: " << smallest_ans << endl;
 
         return (total_sum == smallest_ans) ? largest_ans : max(largest_ans, total_sum - smallest_ans);
     }
