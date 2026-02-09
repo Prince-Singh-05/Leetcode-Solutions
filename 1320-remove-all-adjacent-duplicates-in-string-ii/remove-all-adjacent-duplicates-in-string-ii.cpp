@@ -4,24 +4,30 @@ public:
         int n = s.size();
         if(n<k) return s;
         
-        stack<pair<char,int>> st;
+        stack<char> st;
+        stack<int> count;
+
         for(int i=0; i<n; ++i){
-            if(st.empty() || st.top().first != s[i]) st.push({s[i],1});
-            else{
-                auto prev = st.top();
-                st.pop();
-                st.push({s[i], prev.second+1});
+            if (!st.empty() && st.top() == s[i]) {
+                count.push(count.top() + 1);
+            } else {
+                count.push(1);
             }
-            if(st.top().second==k) st.pop();
+
+            st.push(s[i]);
+
+            if (count.top() == k) {
+                for (int j = 0; j<k; j++) {
+                    st.pop();
+                    count.pop();
+                }
+            }
         }
         
         string ans = "";
         while(!st.empty()){
-            auto cur = st.top();
+            ans += st.top();
             st.pop();
-            while(cur.second--){
-                ans.push_back(cur.first);
-            }
         }
         reverse(ans.begin(), ans.end());
         return ans;
