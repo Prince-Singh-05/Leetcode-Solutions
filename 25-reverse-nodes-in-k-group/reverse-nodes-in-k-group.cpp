@@ -9,69 +9,63 @@
  * };
  */
 class Solution {
-
-private: 
-    ListNode* reverseLL(ListNode* head) {
-
-        ListNode* prev = NULL;
+private:
+    void reverse(ListNode* head, int times) {
         ListNode* curr = head;
-        ListNode* forward = NULL;
+        ListNode* prev = NULL;
 
-        while(curr != NULL) {
-            forward = curr->next;
+        while (times--) {
+            ListNode* temp = curr->next;
             curr->next = prev;
             prev = curr;
-            curr = forward;
+            curr = temp;
         }
-
-        return prev;
-
-    }
-
-    ListNode* getKthNode(ListNode* temp, int k) {
-        k -= 1;
-
-        while(temp != NULL && k > 0) {
-            temp = temp->next;
-            k -= 1;
-        }
-
-        return temp;
     }
 
 public:
     ListNode* reverseKGroup(ListNode* head, int k) {
-        
-        ListNode* temp = head;
-        ListNode* prevLast = NULL;
+        if (head == NULL || head->next == NULL) return head;
 
-        while(temp != NULL) {
-            ListNode* kthNode = getKthNode(temp, k);
+        ListNode* left = head;
+        ListNode* right = NULL;
+        ListNode* prevleft = NULL;
+        ListNode* res = NULL;
 
-            if(kthNode == NULL) {
-                if(prevLast) {
-                    prevLast->next = temp;
+        while (true) {
+            right = left;
+            for (int i = 0; i<k-1; i++) {
+                if (right == NULL) break;
+                right = right->next;
+            }
+
+            if (right) {
+                ListNode* nextleft = right->next;
+                reverse(left, k);
+
+                if (prevleft) {
+                    prevleft->next = right;
                 }
+
+                prevleft = left;
+
+                if (res == NULL) {
+                    res = right;
+                }
+
+                left = nextleft;
+            } else {
+                if (prevleft) {
+                    prevleft->next = left;
+                }
+
+                if (res == NULL) {
+                    res = left;
+                }
+
                 break;
             }
-
-            ListNode* nextNode = kthNode->next;
-            kthNode->next = NULL;
-
-            reverseLL(temp);
-
-            if(temp == head) {
-                head = kthNode;
-            }
-            else {
-                prevLast->next = kthNode;
-            }
-
-            prevLast = temp;
-            temp = nextNode;
         }
 
-        return head;
-
+        return res;
     }
 };
