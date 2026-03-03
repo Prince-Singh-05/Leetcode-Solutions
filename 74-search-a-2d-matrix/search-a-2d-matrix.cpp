@@ -1,40 +1,35 @@
 class Solution {
 public:
     bool searchMatrix(vector<vector<int>>& matrix, int target) {
-
         int m = matrix.size();
         int n = matrix[0].size();
-        if(target > matrix[m-1][n-1]) return false;
 
-        int targetRow = 0;
+        if (target < matrix[0][0] || target > matrix[m-1][n-1]) return false;
 
-        for(int row = 0; row < m; row++) {
-            if(target <= matrix[row][n-1]) {
-                targetRow = row;
+        int row = 0;
+
+        for (int i = 0; i < m; i++) {
+            if (target <= matrix[i][n-1]) {
+                row = i;
                 break;
             }
         }
 
-        cout << targetRow << endl;
+        int s = 0;
+        int e = n-1;
 
-        int left = 0;
-        int right = n-1;
+        while (s <= e) {
+            int mid = s + (e-s)/2;
 
-        while(left <= right) {
-            int mid = left + (right-left)/2;
-
-            if(matrix[targetRow][mid] == target) {
+            if (matrix[row][mid] == target) {
                 return true;
-            }
-            else if(matrix[targetRow][mid] < target) {
-                left = mid+1;
-            }
-            else {
-                right = mid-1;
+            } else if (matrix[row][mid] < target) {
+                s = mid+1;
+            } else {
+                e = mid-1;
             }
         }
 
         return false;
-        
     }
 };
