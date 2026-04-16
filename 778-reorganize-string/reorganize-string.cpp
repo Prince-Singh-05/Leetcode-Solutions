@@ -32,7 +32,7 @@ public:
                 }
             } else {
                 if (pq.empty()) {
-                    res = "";
+                    return "";
                 } else {
                     pair<int, char> p2 = pq.top();
                     pq.pop();
