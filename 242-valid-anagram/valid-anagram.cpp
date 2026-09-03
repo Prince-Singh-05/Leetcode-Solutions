@@ -2,31 +2,20 @@ class Solution {
 public:
     bool isAnagram(string s, string t) {
 
-        if(s.size() != t.size()) return false;
+        if (s.length() != t.length()) return false;
 
-        unordered_map<char, int> charCount;
+        unordered_map<char, int> fs;
+        unordered_map<char, int> ft;
 
-        for (char c : s) {
-            charCount[c]++;
+        for (int i = 0; i<s.length(); i++) {
+            fs[s[i]]++;
+            ft[t[i]]++;
         }
 
-        // Decrement counts for characters in t
-        for (char c : t) {
-            if (charCount.find(c) != charCount.end()) {
-                charCount[c]--;
-            } else {
-                return false; // Character not found in s
-            }
+        for (int i = 0; i<fs.size(); i++) {
+            if (fs[i] != ft[i]) return false;
         }
 
-        // Check if all counts are zero
-        for (const auto& pair : charCount) {
-            if (pair.second != 0) {
-                return false;
-            }
-        }
         return true;
-
-        
     }
 };
